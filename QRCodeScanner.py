@@ -37,16 +37,14 @@ if ('qrcode' not in st.session_state):
 
 #### Main program
 ## QR Code scanner (https needed)
-with st.expander('QR Code scanner', expanded = False):
-  st.subheader('QR Code scanner')
-  if st.button('Scan QR Code?'):
-    st.session_state['qrcode'] = True  
+st.subheader('QR Code scanner')
+if st.button('Scan QR Code?'):
+  st.session_state['qrcode'] = True  
     
-  if st.session_state['qrcode'] == True:
-    qrcode = qrcode_scanner(key = 'qrcode_scanner')
-    print(qrcode)
-    if qrcode != None:
-      webbrowser.open(qrcode)
-      st.session_state['qrcode'] = False
-      qrcode = None
-      st.experimental_rerun()
+if st.session_state['qrcode'] == True:
+  qrcode = qrcode_scanner(key = 'qrcode_scanner')
+  if qrcode != None:
+    webbrowser.open(qrcode)
+    st.session_state['qrcode'] = False
+    qrcode = None
+    st.experimental_rerun()
