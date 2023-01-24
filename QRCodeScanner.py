@@ -27,6 +27,14 @@ st.set_page_config(
 
 
 
+#### Initialization of session states
+## QR Code session state
+if ('qrcode' not in st.session_state):
+  st.session_state['qrcode'] = False
+
+
+
+
 #### Main program
 ## QR Code scanner (https needed)
 with st.expander('QR Code scanner', expanded = False):
