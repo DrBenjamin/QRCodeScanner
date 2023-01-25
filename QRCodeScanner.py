@@ -59,7 +59,7 @@ option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR 
 
 ## QR Code scanner (https needed)
 if option == 'QR Code Scanner':
-  st.subheader('QR Code scanner')
+  st.subheader('QR Code Scanner')
 
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
   if qrcode != None:
@@ -68,6 +68,7 @@ if option == 'QR Code Scanner':
       
 ## QR Code generator
 elif option == 'QR Code Generator':
+  st.subheader('QR Code Generator')
   url = st.text_input(label = 'Please enter an Url')
   if url != "":
     qrcode_image = generate_qrcode(url)
