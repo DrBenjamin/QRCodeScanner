@@ -54,22 +54,16 @@ def generate_qrcode(data):
 
 
 #### Main program
-option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
+option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
 
 
 ## QR Code scanner (https needed)
 if option == 'QR Code Scanner':
   st.subheader('QR Code scanner')
-  if st.button('Scan QR Code?'):
-    st.session_state['qrcode'] = True  
-      
-  if st.session_state['qrcode'] == True:
-    qrcode = qrcode_scanner(key = 'qrcode_scanner')
-    if qrcode != None:
-      webbrowser.open(qrcode)
-      st.session_state['qrcode'] = False
-      qrcode = None
-      st.experimental_rerun()
+
+  qrcode = qrcode_scanner(key = 'qrcode_scanner')
+  if qrcode != None:
+    webbrowser.open(qrcode)
       
       
 ## QR Code generator
