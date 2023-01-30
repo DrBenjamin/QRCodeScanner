@@ -70,8 +70,12 @@ if option == 'QR Code Scanner':
 elif option == 'QR Code Generator':
   st.subheader('QR Code Generator')
   url = st.text_input(label = 'Please enter an Url')
+  emp =  st.text_input(label = 'Please enter an employee number')
+  pin =  st.text_input(label = 'Please enter the PIN')
   if url != "":
-    qrcode_image = generate_qrcode(url)
+    if url[len(url) - 1] == '/'
+      url = url[:-1]
+    qrcode_image = generate_qrcode(url + '/?eno=' + emp + '&pin=' + pin)
   else:
     qrcode_image = None
   if qrcode_image != None:
