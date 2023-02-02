@@ -6,4 +6,5 @@
 streamlit == 1.17.0
 streamlit_image_select
 streamlit_qrcode_scanner
+streamlit_ws_localstorage
 qrcode
