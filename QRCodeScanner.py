@@ -1,4 +1,4 @@
- ##### QRCodeScanner.py`
+##### QRCodeScanner.py`
 ##### QR Code Scanner for HR Staff Portal
 ##### Open-Source, hostet on https://github.com/DrBenjamin/QRCodeScanner
 ##### Please reach out to ben@benbox.org for any questions
@@ -17,7 +17,7 @@ import qrcode
 #### Streamlit initial setup
 st.set_page_config(
   page_title = "QR Code Scanner",
-  page_icon = "QRCode.png",
+  page_icon = "images/QRCode.png",
   layout = "centered",
   initial_sidebar_state = "expanded",
   menu_items = { 
@@ -59,15 +59,18 @@ def generate_qrcode(data):
 ## Main call to the api, returns a communication object
 conn = injectWebsocketCode(hostPort='linode.liquidco.in', uid=getOrCreateUID())
 
+# Set local variables
 st.write('setting into localStorage')
-ret = conn.setLocalStorageVal(key='k1', val='v1')
+ret = conn.setLocalStorageVal(key = 'k1', val = 'v1')
 st.write('ret: ' + ret)
 
+# Get local variables
 st.write('getting from localStorage')
-ret = conn.getLocalStorageVal(key='k1')
+ret = conn.getLocalStorageVal(key = 'k1')
 st.write('ret: ' + ret)
 
 
+## Selectbox as menu
 option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
 
 
