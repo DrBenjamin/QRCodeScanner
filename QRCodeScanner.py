@@ -5,6 +5,7 @@
 #### Loading needed Python libraries
 import streamlit as st
 import streamlit.components.v1 as stc
+from streamlit_ws_localstorage import injectWebsocketCode, getOrCreateUID
 import io
 import webbrowser
 from streamlit_qrcode_scanner import qrcode_scanner
@@ -54,6 +55,19 @@ def generate_qrcode(data):
 
 
 #### Main program
+### Synchronous local storage
+## Main call to the api, returns a communication object
+conn = injectWebsocketCode(hostPort='linode.liquidco.in', uid=getOrCreateUID())
+
+st.write('setting into localStorage')
+ret = conn.setLocalStorageVal(key='k1', val='v1')
+st.write('ret: ' + ret)
+
+st.write('getting from localStorage')
+ret = conn.getLocalStorageVal(key='k1')
+st.write('ret: ' + ret)
+
+
 option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
 
 
