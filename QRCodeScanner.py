@@ -6,6 +6,7 @@
 import streamlit as st
 import streamlit.components.v1 as stc
 from streamlit_ws_localstorage import injectWebsocketCode, getOrCreateUID
+from gsheetsdb import connect
 import io
 import webbrowser
 from streamlit_qrcode_scanner import qrcode_scanner
@@ -64,7 +65,26 @@ st.write('getting from localStorage')
 ret = conn.getLocalStorageVal(key = 'k1')
 st.write('return: ' + ret)
 
+## Google Sheet
+# Create a connection object.
+conn = connect()
 
+# Perform SQL query on the Google Sheet.
+# Uses st.cache to only rerun when the query changes or after 10 min.
+@st.cache(ttl = 600)
+def run_query(query):
+    rows = conn.execute(query, headers = 1)
+    rows = rows.fetchall()
+    return rows
+
+sheet_url = st.secrets['google']['url']
+rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
+# Print results.
+for row in rows:
+    st.write(f"{row.name} has a :{row.pet}:")
+    
+    
 ## Selectbox as menu
 option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
 
