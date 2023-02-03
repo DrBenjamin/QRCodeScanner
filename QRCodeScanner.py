@@ -54,45 +54,43 @@ def generate_qrcode(data):
 
     
 #### Main program
-st.write('Python ' + platform.python_version() + ' and Streamlit ' + st.__version__)
-### Synchronous local storage
-## Main call to the api, returns a communication object
-conn = injectWebsocketCode(hostPort = 'linode.liquidco.in', uid = getOrCreateUID())
-
-# Set local variables
-st.write('setting into localStorage')
-ret = conn.setLocalStorageVal(key = 'k1', val = 'v1')
-st.write('return: ' + ret)
-
-# Get local variables
-st.write('getting from localStorage')
-ret = conn.getLocalStorageVal(key = 'k1')
-st.write('return: ' + ret)
-    
-
 ## Google Sheet support
-data_df = pd.DataFrame(columns = ['name', 'workshop'])
-df = pd.DataFrame([['Test', 'Tester']], columns = ['name', 'workshop'])
-data_df = pd.concat([data_df, df])
-data_list = [['Ben', 'Python programming'], ['Benja', 'Python lecturing']]
+with st.expander(label = 'Google Sheet support', expanded = False):
+	st.write('Python ' + platform.python_version() + ' and Streamlit ' + st.__version__)
+	st.write(st.secrets['google']['url'])
+	data_list = [['Benjamin', 'Python programming'], ['Stefan', 'Projectmanagement'], ['Thoko', 'Leadership'], ['Hope', 'PHP programming'], ['Nick', 'Java programming']]
+	
+	client = pygsheets.authorize(service_file = 'google_credentials.json')
+	
+	# Open the spreadsheet and the first sheet
+	sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
+	
+	wks = sh.sheet1
+	
+	# Read Sheet
+	data = wks.get_as_df()
+	st.write(data)
+	
+	# Update a single cell.
+	wks.update_value('A1', "name")
+	
+	# Update the worksheet with the numpy array values. Beginning at cell 'A2'.
+	wks.update_values('A2', data_list)
+	
 
-client = pygsheets.authorize(service_file = 'google_credentials.json')
+	## Synchronious local storage## Main call to the api, returns a communication object
+	#conn = injectWebsocketCode(hostPort = 'linode.liquidco.in', uid = getOrCreateUID())
 
-# Open the spreadsheet and the first sheet
-sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
-
-wks = sh.sheet1
-
-# Read Sheet
-data = wks.get_as_df()
-st.write(data)
-
-# Update a single cell.
-wks.update_value('A1', "name")
-
-# Update the worksheet with the numpy array values. Beginning at cell 'A2'.
-wks.update_values('A2', data_list)
-
+	# Set local variables
+	#st.write('setting into localStorage')
+	#ret = conn.setLocalStorageVal(key = 'k1', val = 'v1')
+	#st.write('return: ' + ret)
+	
+	# Get local variables
+	#st.write('getting from localStorage')
+	#ret = conn.getLocalStorageVal(key = 'k1')
+	#st.write('return: ' + ret)
+	
     
 ## Selectbox as menu
 option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
