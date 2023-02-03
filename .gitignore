@@ -9,6 +9,7 @@ QRCodeScanner.Rproj
 __pycache__/
 *.py[cod]
 *$py.class
+google_credentials.json
 
 # C extensions
 *.so
