@@ -57,17 +57,17 @@ def generate_qrcode(data):
 #### Main program
 ### Synchronous local storage
 ## Main call to the api, returns a communication object
-conn = injectWebsocketCode(hostPort='linode.liquidco.in', uid=getOrCreateUID())
+conn = injectWebsocketCode(hostPort = 'linode.liquidco.in', uid = getOrCreateUID())
 
 # Set local variables
 st.write('setting into localStorage')
 ret = conn.setLocalStorageVal(key = 'k1', val = 'v1')
-st.write('ret: ' + ret)
+st.write('return: ' + ret)
 
 # Get local variables
 st.write('getting from localStorage')
 ret = conn.getLocalStorageVal(key = 'k1')
-st.write('ret: ' + ret)
+st.write('return: ' + ret)
 
 
 ## Selectbox as menu
