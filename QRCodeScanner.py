@@ -9,8 +9,6 @@ from streamlit_ws_localstorage import injectWebsocketCode, getOrCreateUID
 import platform
 import pandas as pd
 import pygsheets
-import io
-import webbrowser
 from streamlit_qrcode_scanner import qrcode_scanner
 import qrcode
 
