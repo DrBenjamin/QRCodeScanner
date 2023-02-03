@@ -49,16 +49,6 @@ def generate_qrcode(data):
 
   # Return qrcode
   return byteIO.getvalue()
- 
- 
- 
-### Function: google_query = Perform SQL query on the Google Sheet
-# Uses st.cache to only rerun when the query changes or after 10 min.
-@st.cache(ttl = 600)
-def goolge_query(query):
-    rows = conn_google.execute(query, headers = 1)
-    rows = rows.fetchall()
-    return rows
     
 
 
@@ -80,13 +70,13 @@ ret = conn.getLocalStorageVal(key = 'k1')
 st.write('return: ' + ret)
     
 
-## Google Sheet
+## Google Sheet support
 data_df = pd.DataFrame(columns = ['name', 'workshop'])
 df = pd.DataFrame([['Test', 'Tester']], columns = ['name', 'workshop'])
 data_df = pd.concat([data_df, df])
 data_list = [['Ben', 'Python programming'], ['Benja', 'Python lecturing']]
 
-client = pygsheets.authorize(service_file='google_credentials.json')
+client = pygsheets.authorize(service_file = 'google_credentials.json')
 
 # Open the spreadsheet and the first sheet
 sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
