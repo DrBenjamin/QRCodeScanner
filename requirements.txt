@@ -8,4 +8,5 @@ streamlit_image_select
 streamlit_qrcode_scanner
 streamlit_ws_localstorage
 websockets
+gsheetsdb
 qrcode
