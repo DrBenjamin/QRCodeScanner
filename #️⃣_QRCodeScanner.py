@@ -1,4 +1,4 @@
-##### QRCodeScanner.py`
+##### `#️⃣_QRCodeScanner.py`
 ##### QR Code Scanner for HR Staff Portal
 ##### Open-Source, hostet on https://github.com/DrBenjamin/QRCodeScanner
 ##### Please reach out to ben@benbox.org for any questions
