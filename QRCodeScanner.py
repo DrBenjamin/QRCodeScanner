@@ -8,18 +8,12 @@ import streamlit.components.v1 as stc
 from streamlit_ws_localstorage import injectWebsocketCode, getOrCreateUID
 import platform
 import pandas as pd
-#from gsheetsdb import connect
+import pygsheets
 import io
 import webbrowser
 from streamlit_qrcode_scanner import qrcode_scanner
 import qrcode
-import os.path
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from oauth2client import service_account
+
 
 
 
@@ -65,63 +59,7 @@ def goolge_query(query):
     rows = conn_google.execute(query, headers = 1)
     rows = rows.fetchall()
     return rows
-
-
-
-### Function: write_to_gsheet = Perform writing SQL query on the Google Sheet
-def write_to_gsheet(service_file_path, spreadsheet_id, sheet_name, data_df):
-    """
-    this function takes data_df and writes it under spreadsheet_id
-    and sheet_name using your credentials under service_file_path
-    """
-    gc = pygsheets.authorize(service_file=service_file_path)
-    sh = gc.open_by_key(spreadsheet_id)
-    try:
-        sh.add_worksheet(sheet_name)
-    except:
-        pass
-    wks_write = sh.worksheet_by_title(sheet_name)
-    wks_write.clear('A1',None,'*')
-    wks_write.set_dataframe(data_df, (1,1), encoding='utf-8', fit=True)
-    wks_write.frozen_rows = 1
     
-    
-
-### Function google_sheet = Perform writing SQL query on the Google Sheet
-def google_sheet():
-	# If modifying these scopes, delete the file token.json
-	scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-	sheet_range = 'Class Data!A2:B'
-	creds = None
-	if os.path.exists('token.json'):
-		creds = Credentials.from_authorized_user_file('token.json', scopes)
-	if not creds or not creds.valid:
-		if creds and creds.expired and creds.refresh_token:
-			creds.refresh(Request())
-		else:
-			flow = InstalledAppFlow.from_client_secrets_file('google_user_credentials.json', scopes)
-			creds = flow.run_local_server(port=0)
-			
-			# Save the credentials for the next run
-			with open('token.json', 'w') as token:
-				token.write(creds.to_json())
-
-	try:
-		service = build('sheets', 'v4', credentials = creds)
-		sheet = service.spreadsheets()
-		result = sheet.values().get(spreadsheetId = st.secrets['google']['spreadsheet_id'], range = sheet_range).execute()
-		values = result.get('values', [])
-		
-		if not values:
-			print('No data found')
-			return
-		
-		print('name, workshop:')
-		for row in values:
-			print('%s, %s' % (row[0], row[1]))
-			
-	except HttpError as err:
-		print(err)
 
 
     
@@ -129,38 +67,41 @@ def google_sheet():
 st.write('Python ' + platform.python_version() + ' and Streamlit ' + st.__version__)
 ### Synchronous local storage
 ## Main call to the api, returns a communication object
-#conn = injectWebsocketCode(hostPort = 'linode.liquidco.in', uid = getOrCreateUID())
+conn = injectWebsocketCode(hostPort = 'linode.liquidco.in', uid = getOrCreateUID())
 
 # Set local variables
-#st.write('setting into localStorage')
-#ret = conn.setLocalStorageVal(key = 'k1', val = 'v1')
-#st.write('return: ' + ret)
+st.write('setting into localStorage')
+ret = conn.setLocalStorageVal(key = 'k1', val = 'v1')
+st.write('return: ' + ret)
 
 # Get local variables
-#st.write('getting from localStorage')
-#ret = conn.getLocalStorageVal(key = 'k1')
-#st.write('return: ' + ret)
-
-## Google Sheet
-# Create a connection object.
-#conn_google = connect()
-
-# Execute query
-#url = st.secrets['google']['url']
-#rows = goolge_query(f'SELECT * FROM "{url}"')
-#rows = goolge_query(f'INSERT INTO "{url}"(name, workshop) VALUES ("Test", "Testing")')
-
-# Print results.
-#for row in rows:
-#    st.write(row[0] + ' attends ' + row[1])
+st.write('getting from localStorage')
+ret = conn.getLocalStorageVal(key = 'k1')
+st.write('return: ' + ret)
     
 
-## Write to Google Sheet
+## Google Sheet
 data_df = pd.DataFrame(columns = ['name', 'workshop'])
 df = pd.DataFrame([['Test', 'Tester']], columns = ['name', 'workshop'])
 data_df = pd.concat([data_df, df])
+data_list = [['Ben', 'Python programming'], ['Benja', 'Python lecturing']]
 
-google_sheet()
+client = pygsheets.authorize(service_file='google_credentials.json')
+
+# Open the spreadsheet and the first sheet
+sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
+
+wks = sh.sheet1
+
+# Read Sheet
+data = wks.get_as_df()
+st.write(data)
+
+# Update a single cell.
+wks.update_value('A1', "name")
+
+# Update the worksheet with the numpy array values. Beginning at cell 'A2'.
+wks.update_values('A2', data_list)
 
     
 ## Selectbox as menu
