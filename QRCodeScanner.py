@@ -20,11 +20,6 @@ st.set_page_config(
   page_icon = "images/QRCode.png",
   layout = "centered",
   initial_sidebar_state = "expanded",
-  menu_items = { 
-         'Get Help': st.secrets['custom']['menu_items_help'],
-         'Report a bug': st.secrets['custom']['menu_items_bug'],
-         'About': st.secrets['custom']['menu_items_about']
-        }
 ) 
 
 
