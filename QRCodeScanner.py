@@ -6,12 +6,15 @@
 import streamlit as st
 import streamlit.components.v1 as stc
 from streamlit_ws_localstorage import injectWebsocketCode, getOrCreateUID
+import os
+import shutil
 import platform
 import pandas as pd
+import numpy as np
 import pygsheets
+from google_drive_downloader import GoogleDriveDownloader as gdd
 from streamlit_qrcode_scanner import qrcode_scanner
 import qrcode
-from google_drive_downloader import GoogleDriveDownloader as gdd
 
 
 
@@ -51,8 +54,6 @@ def generate_qrcode(data):
  
 
 ### Function: load_data = Loading Google Sheet API credentials (non permanent)
-## Function is cached
-#@st.cache
 def download_data():
 	output = st.secrets['google']['credentials_file']
 	gdd.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
@@ -61,31 +62,42 @@ def download_data():
   
     
 #### Main program
-## Google Sheet support
+### Google Sheet support
 with st.expander(label = 'Google Sheet support', expanded = False):
-	st.write('Python ' + platform.python_version() + ' and Streamlit ' + st.__version__)
-	st.write(st.secrets['google']['url'])
-	data_list = [['Benjamin', 'Python programming'], ['Stefan', 'Projectmanagement'], ['Thoko', 'Leadership'], ['Hope', 'PHP programming'], ['Nick', 'Java programming']]
-	
-	# Google Sheet API authorization
-	download_data()
-	client = pygsheets.authorize(service_file = st.secrets['google']['credentials_file'])
-	
-	# Open the spreadsheet and the first sheet
-	sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
-	
-	wks = sh.sheet1
-	
-	# Read Sheet
-	data = wks.get_as_df()
-	st.write(data)
-	
-	# Update a single cell.
-	wks.update_value('A1', "name")
-	
-	# Update the worksheet with the numpy array values. Beginning at cell 'A2'.
-	wks.update_values('A2', data_list)
-	
+  ## Google Sheet API authorization
+  output = st.secrets['google']['credentials_file']
+  gdd.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
+  client = pygsheets.authorize(service_file = st.secrets['google']['credentials_file'])
+  if os.path.exists("credentials.zip"):
+    os.remove("credentials.zip")
+  if os.path.exists("google_credentials.json"):
+    os.remove("google_credentials.json")
+  if os.path.exists("__MACOSX"):
+    shutil.rmtree("__MACOSX")
+    
+    
+  ## Open the spreadsheet and the first sheet
+  sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
+  wks = sh.sheet1
+  
+  
+  ## Read worksheet
+  data = wks.get_as_df()
+  data = data.set_index('ID')
+  st.write(data)
+  
+  
+  ## Update the worksheet with the numpy array values, beginning at cell 'A2'
+  # Creating numpy array
+  #numb = np.array(databank_google_workshop)
+  #numb[:, [4]] = numb[:, [4]].astype('str')
+  
+  # Converting numby array to list
+  #numb = numb.tolist()
+  
+  # Writing to worksheet
+  #wks.update_values(crange = 'A2', values = numb)
+
 
 	## Synchronious local storage## Main call to the api, returns a communication object
 	#conn = injectWebsocketCode(hostPort = 'linode.liquidco.in', uid = getOrCreateUID())
@@ -100,7 +112,9 @@ with st.expander(label = 'Google Sheet support', expanded = False):
 	#ret = conn.getLocalStorageVal(key = 'k1')
 	#st.write('return: ' + ret)
 	
-    
+
+
+### QR Code Logic
 ## Selectbox as menu
 option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
 
