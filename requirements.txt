@@ -6,9 +6,11 @@
 streamlit==1.17.0
 streamlit_image_select
 streamlit_ws_localstorage
+pandas
+numpy
 protobuf==3.20.3
 websockets
 pygsheets
+googledrivedownloader
 streamlit_qrcode_scanner
 qrcode
-googledrivedownloader
