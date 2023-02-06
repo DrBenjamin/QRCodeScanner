@@ -7,6 +7,8 @@ QRCodeScanner.Rproj
 .DS_Store
 # Byte-compiled / optimized / DLL files
 __pycache__/
+__MACOSX
+credentials.zip
 *.py[cod]
 *$py.class
 google_credentials.json

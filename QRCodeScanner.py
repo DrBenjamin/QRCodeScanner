@@ -11,7 +11,7 @@ import pandas as pd
 import pygsheets
 from streamlit_qrcode_scanner import qrcode_scanner
 import qrcode
-import gdown
+from google_drive_downloader import GoogleDriveDownloader as gdd
 
 
 
@@ -56,12 +56,10 @@ def generate_qrcode(data):
 def download_data():
 	url = st.secrets['google']['credentials_file_url']
 	output = st.secrets['google']['credentials_file']
-	gdown.download(url, output, quiet = False)
+	gdd.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
 
-	#st.download_button(label = 'Download credentials file', data = url, file_name = st.secrets['google']['credentials_file'])
-
-
-
+	
+  
     
 #### Main program
 ## Google Sheet support

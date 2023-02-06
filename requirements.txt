@@ -11,4 +11,4 @@ websockets
 pygsheets
 streamlit_qrcode_scanner
 qrcode
-gdown
+googledrivedownloader
