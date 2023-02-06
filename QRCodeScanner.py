@@ -11,7 +11,7 @@ import pandas as pd
 import pygsheets
 from streamlit_qrcode_scanner import qrcode_scanner
 import qrcode
-
+import gdown
 
 
 
@@ -47,7 +47,19 @@ def generate_qrcode(data):
 
   # Return qrcode
   return byteIO.getvalue()
-    
+ 
+ 
+
+### Function: load_data = Loading Google Sheet API credentials (non permanent)
+## Function is cached
+#@st.cache
+def download_data():
+	url = st.secrets['google']['credentials_file_url']
+	output = st.secrets['google']['credentials_file']
+	gdown.download(url, output, quiet = False)
+
+	#st.download_button(label = 'Download credentials file', data = url, file_name = st.secrets['google']['credentials_file'])
+
 
 
     
@@ -58,7 +70,9 @@ with st.expander(label = 'Google Sheet support', expanded = False):
 	st.write(st.secrets['google']['url'])
 	data_list = [['Benjamin', 'Python programming'], ['Stefan', 'Projectmanagement'], ['Thoko', 'Leadership'], ['Hope', 'PHP programming'], ['Nick', 'Java programming']]
 	
-	client = pygsheets.authorize(service_file = 'google_credentials.json')
+	# Google Sheet API authorization
+	download_data()
+	client = pygsheets.authorize(service_file = st.secrets['google']['credentials_file'])
 	
 	# Open the spreadsheet and the first sheet
 	sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
