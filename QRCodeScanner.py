@@ -54,7 +54,6 @@ def generate_qrcode(data):
 ## Function is cached
 #@st.cache
 def download_data():
-	url = st.secrets['google']['credentials_file_url']
 	output = st.secrets['google']['credentials_file']
 	gdd.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
 
