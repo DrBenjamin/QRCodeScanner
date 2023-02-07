@@ -133,7 +133,7 @@ if option == 'Secure Access':
     
 ### Identify QR Code generator
 elif option == 'Identify':
-  with st.form('QR Code Generator')
+  with st.form('QR Code Generator'):
     st.subheader('QR Code Generator')
     emp =  st.text_input(label = 'Please enter an employee number')
     pin =  st.text_input(label = 'Please enter the PIN')
