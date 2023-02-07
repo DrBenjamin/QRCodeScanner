@@ -11,7 +11,7 @@ import platform
 import pandas as pd
 import numpy as np
 import pygsheets
-from google_drive_downloader import GoogleDriveDownloader as gdd
+from google_drive_downloader import GoogleDriveDownloader
 from streamlit_qrcode_scanner import qrcode_scanner
 import qrcode
 
