@@ -5,6 +5,7 @@
 #### Loading needed Python libraries
 import streamlit as st
 import streamlit.components.v1 as stc
+import io
 import os
 import shutil
 import platform
