@@ -135,10 +135,10 @@ elif option == 'Identify':
   st.subheader('QR Code Generator')
   emp =  st.text_input(label = 'Please enter an employee number')
   pin =  st.text_input(label = 'Please enter the PIN')
-  if url != "":
-    if url[len(url) - 1] == '/':
-      url = url[:-1]
-    qrcode_image = generate_qrcode(url + '/?eno=' + emp + '&pin=' + pin)
+  if emp != '':
+    if emp[len(url) - 1] == '/':
+      emp = emp[:-1]
+    qrcode_image = generate_qrcode(emp + '/?eno=' + emp + '&pin=' + pin)
   else:
     qrcode_image = None
   if qrcode_image != None:
