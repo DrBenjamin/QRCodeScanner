@@ -1,0 +1,10 @@
+Package: QRCodeScanner
+Type: Package
+Title: HR Staff Portal
+Version: 0.2.0
+Author: Benjamin Gross
+Maintainer: Benjamin Gross <ben@benbox.org>
+Description: QR Code Scanner for HR Staff Portal (https://github.com/DrBenjamin/HRStaffPortal).
+License: GNU General Public License v3.0
+Encoding: UTF-8
+LazyData: true
