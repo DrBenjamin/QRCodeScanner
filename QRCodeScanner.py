@@ -133,20 +133,27 @@ if option == 'Secure Access':
     
 ### Identify QR Code generator
 elif option == 'Identify':
-  st.subheader('QR Code Generator')
-  emp =  st.text_input(label = 'Please enter an employee number')
-  pin =  st.text_input(label = 'Please enter the PIN')
-  qrcode_image = None
-  for row in pin_data:
-    if row[0] == emp:
-      if pin == row[1]:
-        qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
-      else:
-        st.error(body = 'Wrong PIN!', icon = "🚨")
-    else: 
-      st.error(body = 'Wrong Emp. No.!', icon = "🚨")
+  with st.form('QR Code Generator')
+    st.subheader('QR Code Generator')
+    emp =  st.text_input(label = 'Please enter an employee number')
+    pin =  st.text_input(label = 'Please enter the PIN')
+    qrcode_image = None
+    for row in pin_data:
+      print(row[0])
+      if row[0] == emp:
+        if pin == row[1]:
+          qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
+          break
     
-  # Show QR Code
-  if qrcode_image != None:
-    st.image(qrcode_image)
+    submitted = st.submit('Submit')
+    if submitted:
+      # Show QR Code
+      if qrcode_image != None:
+        st.image(qrcode_image)
+        
+      # Error message  
+      else:
+        st.error(body = 'Wrong Emp. No. or PIN!', icon = "🚨")
+  
+    
     
