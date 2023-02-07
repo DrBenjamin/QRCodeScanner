@@ -143,6 +143,8 @@ elif option == 'Identify':
         qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
       else:
         st.error(body = 'Wrong PIN!', icon = "🚨")
+    else: 
+      st.error(body = 'Wrong Emp. No.!', icon = "🚨")
     
   # Show QR Code
   if qrcode_image != None:
