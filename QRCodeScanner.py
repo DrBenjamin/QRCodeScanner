@@ -138,13 +138,12 @@ elif option == 'Identify':
     emp =  st.text_input(label = 'Please enter an employee number')
     pin =  st.text_input(label = 'Please enter the PIN')
     qrcode_image = None
-    print(pin_data)
-    for row in pin_data:
-      print(row[0])
-      if row[0] == emp:
-        if pin == row[1]:
+    for i in range(len(pin_data)):
+      print(pin_data.iloc[i]['Emp. No.'])
+      if emp == str(pin_data.iloc[i]['Emp. No.']):
+        if pin == str(pin_data.iloc[i]['PIN']):
           qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
-          break
+        break
     
     submitted = st.form_submit_button('Submit')
     if submitted:
