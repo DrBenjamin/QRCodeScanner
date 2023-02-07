@@ -145,7 +145,7 @@ elif option == 'Identify':
           qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
           break
     
-    submitted = st.submit('Submit')
+    submitted = st.form_submit_button('Submit')
     if submitted:
       # Show QR Code
       if qrcode_image != None:
