@@ -59,29 +59,40 @@ def download_data():
 
 	
   
+### Function: google_sheet_credentials = Getting Google Sheet API credentials
+@st.experimental_singleton
+def google_sheet_credentials():
+  ## Google Sheet API authorization
+  output = st.secrets['google']['credentials_file']
+  GoogleDriveDownloader.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
+  client = pygsheets.authorize(service_file = st.secrets['google']['credentials_file'])
+  if os.path.exists("credentials.zip"):
+    os.remove("credentials.zip")
+  if os.path.exists("google_credentials.json"):
+    os.remove("google_credentials.json")
+  if os.path.exists("__MACOSX"):
+    shutil.rmtree("__MACOSX")
+    
+  # Return client
+  return client
+
+
+
     
 #### Main program
 ### Google Sheet support
-## Google Sheet API authorization
-output = st.secrets['google']['credentials_file']
-gdd.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
-client = pygsheets.authorize(service_file = st.secrets['google']['credentials_file'])
-if os.path.exists("credentials.zip"):
-  os.remove("credentials.zip")
-if os.path.exists("google_credentials.json"):
-  os.remove("google_credentials.json")
-if os.path.exists("__MACOSX"):
-  shutil.rmtree("__MACOSX")
-    
-    
 ## Open the spreadsheet and the first sheet
-sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
-wks = sh.sheet1
+# Getting credentials
+client = google_sheet_credentials()
   
+# Opening sheet
+sh = client.open_by_key(st.secrets['google']['pin_spreadsheet_id'])
+wks = sh.sheet1  
+
   
 ## Read worksheet
-data = wks.get_as_df()
-data = data.set_index('ID')
+pin_data = wks.get_as_df()
+pin_data = data.set_index('ID')
 
   
  
@@ -122,7 +133,6 @@ if option == 'Secure Access':
 ### Identify QR Code generator
 elif option == 'Identify':
   st.subheader('QR Code Generator')
-  url = st.text_input(label = 'Please enter an Url')
   emp =  st.text_input(label = 'Please enter an employee number')
   pin =  st.text_input(label = 'Please enter the PIN')
   if url != "":
@@ -133,3 +143,5 @@ elif option == 'Identify':
     qrcode_image = None
   if qrcode_image != None:
     st.image(qrcode_image)
+    
+  st.write(pin_data)
