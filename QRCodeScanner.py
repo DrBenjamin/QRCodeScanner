@@ -138,6 +138,7 @@ elif option == 'Identify':
     emp =  st.text_input(label = 'Please enter an employee number')
     pin =  st.text_input(label = 'Please enter the PIN')
     qrcode_image = None
+    print(pin_data)
     for row in pin_data:
       print(row[0])
       if row[0] == emp:
