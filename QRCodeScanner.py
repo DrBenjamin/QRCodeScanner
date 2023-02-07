@@ -92,7 +92,7 @@ wks = sh.sheet1
   
 ## Read worksheet
 pin_data = wks.get_as_df()
-pin_data = data.set_index('ID')
+pin_data = pin_data.set_index('ID')
 
   
  
