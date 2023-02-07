@@ -87,49 +87,40 @@ with st.expander(label = 'Google Sheet support', expanded = False):
   st.write(data)
   
   
-  ## Update the worksheet with the numpy array values, beginning at cell 'A2'
-  # Creating numpy array
-  #numb = np.array(databank_google_workshop)
-  #numb[:, [4]] = numb[:, [4]].astype('str')
-  
-  # Converting numby array to list
-  #numb = numb.tolist()
-  
-  # Writing to worksheet
-  #wks.update_values(crange = 'A2', values = numb)
-
-
-	## Synchronious local storage## Main call to the api, returns a communication object
-	#conn = injectWebsocketCode(hostPort = 'linode.liquidco.in', uid = getOrCreateUID())
-
-	# Set local variables
-	#st.write('setting into localStorage')
-	#ret = conn.setLocalStorageVal(key = 'k1', val = 'v1')
-	#st.write('return: ' + ret)
-	
-	# Get local variables
-	#st.write('getting from localStorage')
-	#ret = conn.getLocalStorageVal(key = 'k1')
-	#st.write('return: ' + ret)
-	
-
-
-### QR Code Logic
 ## Selectbox as menu
-option = st.radio(label = "CHOOSE MODE 👇", options = ["QR Code Scanner", "QR Code Generator"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
+option = st.radio(label = "CHOOSE MODE 👇", options = ["Workshop", "Labor", "Secure Access", "Identify"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
 
 
-## QR Code scanner (https needed)
-if option == 'QR Code Scanner':
-  st.subheader('QR Code Scanner')
+## Workshop QR Code scanner
+if option == 'Workshop':
+  st.subheader('QR Code Scanner for Workshops')
 
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
   if qrcode != None:
     webbrowser.open(qrcode)
       
-      
-## QR Code generator
-elif option == 'QR Code Generator':
+
+## Labor QR Code scanner
+elif option == 'Labor':
+  st.subheader('QR Code Scanner for Labor')
+
+  qrcode = qrcode_scanner(key = 'qrcode_scanner')
+  if qrcode != None:
+    webbrowser.open(qrcode)      
+
+
+
+## Secure Access QR Code scanner
+if option == 'Secure Access':
+  st.subheader('QR Code Scanner for Secure Access')
+
+  qrcode = qrcode_scanner(key = 'qrcode_scanner')
+  if qrcode != None:
+    webbrowser.open(qrcode)
+    
+    
+## Identify QR Code generator
+elif option == 'Identify':
   st.subheader('QR Code Generator')
   url = st.text_input(label = 'Please enter an Url')
   emp =  st.text_input(label = 'Please enter an employee number')
