@@ -5,7 +5,6 @@
 #### Loading needed Python libraries
 import streamlit as st
 import streamlit.components.v1 as stc
-from streamlit_ws_localstorage import injectWebsocketCode, getOrCreateUID
 import os
 import shutil
 import platform
@@ -63,35 +62,35 @@ def download_data():
     
 #### Main program
 ### Google Sheet support
-with st.expander(label = 'Google Sheet support', expanded = False):
-  ## Google Sheet API authorization
-  output = st.secrets['google']['credentials_file']
-  gdd.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
-  client = pygsheets.authorize(service_file = st.secrets['google']['credentials_file'])
-  if os.path.exists("credentials.zip"):
-    os.remove("credentials.zip")
-  if os.path.exists("google_credentials.json"):
-    os.remove("google_credentials.json")
-  if os.path.exists("__MACOSX"):
-    shutil.rmtree("__MACOSX")
+## Google Sheet API authorization
+output = st.secrets['google']['credentials_file']
+gdd.download_file_from_google_drive(file_id = st.secrets['google']['credentials_file_id'], dest_path = './credentials.zip', unzip = True)
+client = pygsheets.authorize(service_file = st.secrets['google']['credentials_file'])
+if os.path.exists("credentials.zip"):
+  os.remove("credentials.zip")
+if os.path.exists("google_credentials.json"):
+  os.remove("google_credentials.json")
+if os.path.exists("__MACOSX"):
+  shutil.rmtree("__MACOSX")
     
     
-  ## Open the spreadsheet and the first sheet
-  sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
-  wks = sh.sheet1
+## Open the spreadsheet and the first sheet
+sh = client.open_by_key(st.secrets['google']['spreadsheet_id'])
+wks = sh.sheet1
   
   
-  ## Read worksheet
-  data = wks.get_as_df()
-  data = data.set_index('ID')
-  st.write(data)
+## Read worksheet
+data = wks.get_as_df()
+data = data.set_index('ID')
+
   
-  
-## Selectbox as menu
-option = st.radio(label = "CHOOSE MODE 👇", options = ["Workshop", "Labor", "Secure Access", "Identify"], index = 1, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
+ 
+### Selectbox as menu
+option = st.radio(label = "CHOOSE MODE 👇", options = ["Workshop", "Labor", "Secure Access", "Identify"], index = 3, key = "mode", label_visibility = 'visible', disabled = False, horizontal = True)
 
 
-## Workshop QR Code scanner
+
+### Workshop QR Code scanner
 if option == 'Workshop':
   st.subheader('QR Code Scanner for Workshops')
 
@@ -110,7 +109,7 @@ elif option == 'Labor':
 
 
 
-## Secure Access QR Code scanner
+### Secure Access QR Code scanner
 if option == 'Secure Access':
   st.subheader('QR Code Scanner for Secure Access')
 
@@ -118,8 +117,9 @@ if option == 'Secure Access':
   if qrcode != None:
     webbrowser.open(qrcode)
     
+  
     
-## Identify QR Code generator
+### Identify QR Code generator
 elif option == 'Identify':
   st.subheader('QR Code Generator')
   url = st.text_input(label = 'Please enter an Url')
