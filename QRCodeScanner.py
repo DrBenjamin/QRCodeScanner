@@ -108,7 +108,8 @@ if option == 'Workshop':
 
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
   if qrcode != None:
-    webbrowser.open(qrcode)
+    st.write(qrcode)
+    #webbrowser.open(qrcode)
       
 
 ## Labor QR Code scanner
@@ -117,7 +118,8 @@ elif option == 'Labor':
 
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
   if qrcode != None:
-    webbrowser.open(qrcode)      
+    st.write(qrcode)
+    #webbrowser.open(qrcode)      
 
 
 
@@ -127,7 +129,8 @@ if option == 'Secure Access':
 
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
   if qrcode != None:
-    webbrowser.open(qrcode)
+    st.write(qrcode)
+    #webbrowser.open(qrcode)
     
   
     
@@ -139,7 +142,6 @@ elif option == 'Identify':
     pin =  st.text_input(label = 'Please enter the PIN')
     qrcode_image = None
     for i in range(len(pin_data)):
-      print(pin_data.iloc[i]['Emp. No.'])
       if emp == str(pin_data.iloc[i]['Emp. No.']):
         if pin == str(pin_data.iloc[i]['PIN']):
           qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
