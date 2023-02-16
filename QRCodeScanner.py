@@ -15,6 +15,7 @@ import pygsheets
 from google_drive_downloader import GoogleDriveDownloader
 from streamlit_qrcode_scanner import qrcode_scanner
 import qrcode
+from datetime import date
 
 
 
@@ -39,6 +40,35 @@ if ('qrcode' not in st.session_state):
   
   
 #### Functions
+### 
+def parse_national_id(text):
+  val = text.split('~')
+
+  if len(val) == 12:
+    fname, mname = val[6].split(', ')
+    lname = val[4]
+    gender = str(val[8]).upper()
+    raw_dob = val[9]
+    nat_id = str(val[5])
+
+    dateOfBirth = str(raw_dob).split(" ")
+    day = dateOfBirth[0]
+    year = dateOfBirth[2]
+    month = dateOfBirth[1]
+
+    month_var = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6, "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12}
+    num_month = month_var[month.upper()]
+
+    birth_date = date(int(year), num_month, int(day))
+
+    print_dob = day + "-" + month + "-" + year
+
+    result = {"first_name": fname,"middle_name":mname, "last_name": lname, "gender": gender, "nation_id": nat_id, "dob": birth_date, "printable_dob": print_dob}
+
+    return result
+
+
+
 ### Function: generate_qrcode = QR Code generator
 def generate_qrcode(data):
   # Encoding data using make() function
@@ -109,6 +139,8 @@ if option == 'Workshop':
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
   if qrcode != None:
     st.write(qrcode)
+    text = parse_national_id(qrcode)
+    st.write(text)
     #webbrowser.open(qrcode)
       
 
