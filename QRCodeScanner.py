@@ -118,16 +118,16 @@ def google_sheet_credentials():
 ### Google Sheet support
 ## Open the spreadsheet and the first sheet
 # Getting credentials
-client = google_sheet_credentials()
+#client = google_sheet_credentials()
   
 # Opening sheet
-sh = client.open_by_key(st.secrets['google']['pin_spreadsheet_id'])
-wks = sh.sheet1  
+#sh = client.open_by_key(st.secrets['google']['pin_spreadsheet_id'])
+#wks = sh.sheet1  
 
   
 ## Read worksheet
-pin_data = wks.get_as_df()
-pin_data = pin_data.set_index('ID')
+#pin_data = wks.get_as_df()
+#pin_data = pin_data.set_index('ID')
 
   
  
