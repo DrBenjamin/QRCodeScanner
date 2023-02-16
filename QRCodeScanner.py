@@ -50,6 +50,7 @@ def parse_national_id(text):
       fname, mname = val[6].split(', ')
     else:
       fname = val[6]
+      mname = ''
     lname = val[4]
     gender = str(val[8]).upper()
     raw_dob = val[9]
@@ -67,7 +68,7 @@ def parse_national_id(text):
 
     print_dob = day + "-" + month + "-" + year
 
-    result = {"first_name": fname,"middle_name":mname, "last_name": lname, "gender": gender, "nation_id": nat_id, "dob": birth_date, "printable_dob": print_dob}
+    result = {"first_name": fname,"middle_name": mname, "last_name": lname, "gender": gender, "nation_id": nat_id, "dob": birth_date, "printable_dob": print_dob}
 
     return result
 
