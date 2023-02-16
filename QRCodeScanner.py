@@ -46,7 +46,10 @@ def parse_national_id(text):
   st.write(val)
 
   if len(val) == 12:
-    fname, mname = val[6].split(', ')
+    if len(val[6].split(', ')) > 1:
+      fname, mname = val[6].split(', ')
+    else
+      fname = val[6]
     lname = val[4]
     gender = str(val[8]).upper()
     raw_dob = val[9]
