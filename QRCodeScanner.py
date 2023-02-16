@@ -40,11 +40,9 @@ if ('qrcode' not in st.session_state):
   
   
 #### Functions
-### 
+### parse_national_id = Parsing National ID QR Code data to list
 def parse_national_id(text):
   val = text.split('~')
-  st.write(val)
-
   if len(val) == 12:
     if len(val[6].split(', ')) > 1:
       fname, mname = val[6].split(', ')
@@ -56,20 +54,18 @@ def parse_national_id(text):
     raw_dob = val[9]
     nat_id = str(val[5])
 
+    # Cleaning data format
     dateOfBirth = str(raw_dob).split(" ")
     day = dateOfBirth[0]
     year = dateOfBirth[2]
     month = dateOfBirth[1]
-
     month_var = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6, "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12}
     num_month = month_var[month.upper()]
-
     birth_date = date(int(year), num_month, int(day))
-
     print_dob = day + "-" + month + "-" + year
-
     result = {"first_name": fname,"middle_name": mname, "last_name": lname, "gender": gender, "nation_id": nat_id, "dob": birth_date, "printable_dob": print_dob}
 
+    # Return result
     return result
 
 
@@ -119,16 +115,16 @@ def google_sheet_credentials():
 ### Google Sheet support
 ## Open the spreadsheet and the first sheet
 # Getting credentials
-#client = google_sheet_credentials()
+client = google_sheet_credentials()
   
 # Opening sheet
-#sh = client.open_by_key(st.secrets['google']['pin_spreadsheet_id'])
-#wks = sh.sheet1  
+sh = client.open_by_key(st.secrets['google']['pin_spreadsheet_id'])
+wks = sh.sheet1  
 
   
 ## Read worksheet
-#pin_data = wks.get_as_df()
-#pin_data = pin_data.set_index('ID')
+pin_data = wks.get_as_df()
+pin_data = pin_data.set_index('ID')
 
   
  
@@ -142,10 +138,7 @@ if option == 'Workshop':
   st.subheader('QR Code Scanner for Workshops')
 
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
-  #qrcode = '03I<MWI0V2GQJ2CX7<<<<<<<<<<<<<<<9304228F3104220MWI<<<<<<<<<<<2JIJIDE<<JACQUELINE<MAGRETS<<<<JIJIDEV2GQJ2CXJACQUELINEMAGRET SAUKILAFemale22 Apr 199305 Jun 2017~'
   if qrcode != None:
-    st.write(qrcode)
-    st.write(type(qrcode))
     text = parse_national_id(qrcode)
     st.write(text)
     #webbrowser.open(qrcode)
@@ -180,11 +173,11 @@ elif option == 'Identify':
     emp =  st.text_input(label = 'Please enter an employee number')
     pin =  st.text_input(label = 'Please enter the PIN')
     qrcode_image = None
-    #for i in range(len(pin_data)):
-      #if emp == str(pin_data.iloc[i]['Emp. No.']):
-     #   if pin == str(pin_data.iloc[i]['PIN']):
-      #    qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
-       # break
+    for i in range(len(pin_data)):
+      if emp == str(pin_data.iloc[i]['Emp. No.']):
+        if pin == str(pin_data.iloc[i]['PIN']):
+          qrcode_image = generate_qrcode('/?eno=' + emp + '&pin=' + pin)
+          break
     
     submitted = st.form_submit_button('Submit')
     if submitted:
