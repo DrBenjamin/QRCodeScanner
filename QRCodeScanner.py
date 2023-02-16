@@ -43,6 +43,7 @@ if ('qrcode' not in st.session_state):
 ### 
 def parse_national_id(text):
   val = text.split('~')
+  st.write(val)
 
   if len(val) == 12:
     fname, mname = val[6].split(', ')
