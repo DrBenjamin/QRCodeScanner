@@ -48,7 +48,7 @@ def parse_national_id(text):
   if len(val) == 12:
     if len(val[6].split(', ')) > 1:
       fname, mname = val[6].split(', ')
-    else
+    else:
       fname = val[6]
     lname = val[4]
     gender = str(val[8]).upper()
