@@ -138,8 +138,10 @@ if option == 'Workshop':
   st.subheader('QR Code Scanner for Workshops')
 
   qrcode = qrcode_scanner(key = 'qrcode_scanner')
+  #qrcode = '03I<MWI0V2GQJ2CX7<<<<<<<<<<<<<<<9304228F3104220MWI<<<<<<<<<<<2JIJIDE<<JACQUELINE<MAGRETS<<<<JIJIDEV2GQJ2CXJACQUELINEMAGRET SAUKILAFemale22 Apr 199305 Jun 2017~'
   if qrcode != None:
     st.write(qrcode)
+    st.write(type(qrcode))
     text = parse_national_id(qrcode)
     st.write(text)
     #webbrowser.open(qrcode)
