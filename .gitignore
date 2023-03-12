@@ -5,6 +5,13 @@
 .streamlit/
 QRCodeScanner.Rproj
 .DS_Store
+misc.xml
+modules.xml
+profiles_settings.xml
+Project_Default.xml
+QRCodeScanner.iml
+vcs.xml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 __MACOSX
