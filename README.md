@@ -18,22 +18,7 @@ All Software which is used to run **QR Code Scaner** is **Open Source**. Please 
 
 Install **[Streamlit & Python](https://docs.streamlit.io/library/get-started/installation)** to run the source code locally. A virtual Python environment like **Anaconda** / **Miniconda** is highly recommend.
 
-After that you need to install some *Python libraries*:
-
-```cmd
-pip install streamlit==1.17.0
-pip install streamlit_image_select
-pip install pandas
-pip install numpy
-pip install protobuf==3.20.3
-pip install websockets
-pip install pygsheets
-pip install googledrivedownloader
-pip install streamlit_qrcode_scanner
-pip install qrcode
-```
-
-or do it at once using the `requirements.txt` file with:
+After that you need to install some *Python libraries*. To do so use the `requirements.txt` file with:
 
 ```cmd
 pip install -r requirements.txt
