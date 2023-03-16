@@ -5,6 +5,13 @@
 .streamlit/
 QRCodeScanner.Rproj
 .DS_Store
+misc.xml
+modules.xml
+profiles_settings.xml
+Project_Default.xml
+QRCodeScanner.iml
+vcs.xml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 __MACOSX
@@ -139,3 +146,37 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .Rproj.user
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/codeStyleConfig.xml
+.idea/**/misc.xml
+.idea/**/modules.xml
+.idea/**/profiles_settings.xml
+.idea/**/Project_Default.xml
+.idea/**/vcs.xml
+HRStaffPortal.iml
+.idea/**/.gitignore
+
+# AWS User-specific
+.idea/**/aws.xml
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
