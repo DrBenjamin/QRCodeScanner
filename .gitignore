@@ -180,3 +180,8 @@ HRStaffPortal.iml
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+.idea/**/#️⃣ QR Code Scanner.iml
+.idea/**/.name
+.idea/**/encodings.xml
+.idea/**/icon.svg
+/.idea/#️ QR Code Scanner.iml
