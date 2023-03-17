@@ -3,7 +3,7 @@
 ##### Open-Source, hostet on https://github.com/DrBenjamin/QRCodeScanner
 ##### Please reach out to ben@benbox.org for any questions
 ### All needed libraries (and their versions)
-streamlit==1.17.0
+streamlit==1.20.0
 streamlit_image_select
 pandas
 numpy
