@@ -1,6 +1,6 @@
 ##### `#️⃣_QRCodeScanner.py`
 ##### QR Code Scanner for HR Staff Portal
-##### Open-Source, hostet on https://github.com/DrBenjamin/QRCodeScanner
+##### Open-Source, hosted on https://github.com/DrBenjamin/QRCodeScanner
 ##### Please reach out to ben@benbox.org for any questions
 #### Loading needed Python libraries
 import streamlit as st
@@ -122,6 +122,7 @@ client = google_sheet_credentials()
 # Opening sheet
 sh = client.open_by_key(st.secrets['google']['pin_spreadsheet_id'])
 wks = sh.sheet1
+
 
 ## Read worksheet
 pin_data = wks.get_as_df()
